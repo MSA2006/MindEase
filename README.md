@@ -1,6 +1,6 @@
 # Mind Ease
 
-Mind Ease is a compassionate AI-powered mental health companion web application designed to provide supportive conversations, journaling capabilities, and relaxation tools to help users manage their mental well-being.
+Mind Ease is a compassionate AI-powered mental health companion web application designed to provide supportive conversations, journaling capabilities, and relaxation tools to help users manage their mental well-being..
 
 ## Features
 
