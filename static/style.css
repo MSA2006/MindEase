@@ -1,0 +1,793 @@
+* {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+            padding: 1rem;
+        }
+
+        /* ================= AUTHENTICATION STYLES ================= */
+        .auth-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 2.5rem;
+            width: 100%;
+            max-width: 500px;
+            transition: all 0.3s ease;
+        }
+
+        .app-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .app-logo {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .app-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+
+        .app-subtitle {
+            color: #666;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .auth-tabs {
+            display: flex;
+            margin-bottom: 2rem;
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 4px;
+        }
+
+        .auth-tab {
+            flex: 1;
+            text-align: center;
+            padding: 12px 20px;
+            border: none;
+            background: transparent;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            color: #666;
+        }
+
+        .auth-tab.active {
+            background: #667eea;
+            color: white;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        .auth-form {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .auth-form.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 16px 50px 16px 20px;
+            border: 2px solid #e1e5e9;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #fafbfc;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
+        }
+
+        .form-input::placeholder {
+            color: #a0a0a0;
+        }
+
+        .password-container {
+            position: relative;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #666;
+            font-size: 1.2rem;
+            z-index: 10;
+        }
+
+        .password-toggle:hover {
+            color: #667eea;
+        }
+
+        .form-button {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .form-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .form-button:active {
+            transform: translateY(0);
+        }
+
+        .alert {
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            animation: slideDown 0.3s ease;
+        }
+
+        .alert.error {
+            background: #fee;
+            border: 1px solid #fcc;
+            color: #c33;
+        }
+
+        .alert.success {
+            background: #efe;
+            border: 1px solid #cfc;
+            color: #3c3;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ================= MAIN APP STYLES ================= */
+        .main-app {
+            display: none;
+            width: 100%;
+            max-width: 1400px;
+            min-height: calc(100vh - 2rem);
+            background: var(--bg-color);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Light Mode Colors */
+        .light-mode {
+            --bg-color: #f9f7f4;
+            --primary-color: #5cb8b2;
+            --secondary-color: #f2d0c9;
+            --text-color: #2e3a3a;
+            --card-bg: white;
+            --border-color: #e1e5e9;
+            --input-bg: #fafbfc;
+            --entry-bg: #ffffff;
+            --btn-bg: #e0e0e0;
+            --btn-text: #222;
+            --nav-bg: linear-gradient(135deg, #5cb8b2 0%, #4a9d96 100%);
+        }
+
+        /* Dark Mode Colors */
+        .dark-mode {
+            --bg-color: #1b2b2e;
+            --primary-color: #82d1ce;
+            --secondary-color: #e8b4a8;
+            --text-color: #d8dad9;
+            --card-bg: #2b3b3e;
+            --border-color: #444;
+            --input-bg: #2b2b2b;
+            --entry-bg: #3a3a3a;
+            --btn-bg: #333;
+            --btn-text: #f5f5f5;
+            --nav-bg: linear-gradient(135deg, #82d1ce 0%, #6bb8b5 100%);
+        }
+
+        .app-nav {
+            background: var(--nav-bg);
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-user {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logout-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .app-content {
+            padding: 2rem;
+            overflow-y: auto;
+            max-height: calc(100vh - 120px);
+            color: var(--text-color);
+        }
+
+        /* Dark/Light Mode Toggle */
+        #modeToggle {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            z-index: 1000;
+            background: var(--primary-color);
+            color: white;
+            font-size: 16px;
+            font-weight: 500;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        #modeToggle:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        header {
+            text-align: center;
+            padding-bottom: 2rem;
+        }
+
+        header h1 {
+            font-size: 2.8rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            color: var(--text-color);
+            opacity: 0.8;
+        }
+
+        .journal-section,
+        .quote-section {
+            max-width: 700px;
+            margin: 2rem auto;
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .journal-section h2,
+        .quote-section h2 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        textarea {
+            width: 100%;
+            height: 150px;
+            margin-top: 1rem;
+            padding: 1.2rem;
+            font-size: 1rem;
+            border-radius: 12px;
+            border: 2px solid var(--border-color);
+            resize: vertical;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            background: var(--input-bg);
+            color: var(--text-color);
+            font-family: inherit;
+            line-height: 1.5;
+            transition: all 0.3s ease;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 4px 15px rgba(92, 184, 178, 0.2);
+            transform: translateY(-2px);
+        }
+
+        button {
+            padding: 12px 24px;
+            font-size: 1rem;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            margin: 0.5rem 0.5rem 0.5rem 0;
+        }
+
+        button:hover {
+            filter: brightness(0.9);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        /* Search input styling */
+        #searchInput {
+            width: 100%;
+            padding: 12px 16px;
+            margin: 1rem 0;
+            font-size: 1rem;
+            border-radius: 10px;
+            border: 2px solid var(--primary-color);
+            background-color: var(--input-bg);
+            transition: all 0.3s ease;
+            color: var(--text-color);
+        }
+
+        #searchInput:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            background-color: var(--card-bg);
+            box-shadow: 0 4px 15px rgba(92, 184, 178, 0.2);
+        }
+
+        .search-info {
+            font-size: 0.9em;
+            color: var(--text-color);
+            opacity: 0.7;
+            margin-bottom: 1rem;
+        }
+
+        #clearSearch {
+            background-color: #666;
+            padding: 8px 16px;
+            font-size: 0.9rem;
+            margin-left: 0.5rem;
+        }
+
+        #clearSearch:hover {
+            background-color: #555;
+        }
+
+        /* Animated entries container */
+        #entriesContainer {
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: max-height 0.5s ease, opacity 0.3s ease, padding 0.3s ease;
+        }
+
+        #entriesContainer.show {
+            max-height: 2000px;
+            opacity: 1;
+            overflow-y: auto;
+            padding-top: 1rem;
+        }
+
+        /* Sound menu styling */
+        .sound-menu {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 999;
+            text-align: right;
+        }
+
+        #sound-toggle {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            padding: 20px;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        #sound-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        #sound-buttons {
+            display: none;
+            margin-bottom: 15px;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 10px;
+        }
+
+        #sound-buttons.show {
+            display: flex;
+            animation: fadeInUp 0.3s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .sound-btn {
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            border: 2px solid var(--border-color);
+            padding: 12px 18px;
+            border-radius: 25px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            min-width: 120px;
+        }
+
+        .sound-btn:hover {
+            background-color: var(--secondary-color);
+            transform: translateX(-5px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .sound-btn.playing {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        /* Journal entry styling */
+        .entry {
+            background-color: var(--entry-bg);
+            color: var(--text-color);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            position: relative;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .entry:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .entry button {
+            background-color: var(--btn-bg);
+            color: var(--btn-text);
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            margin-left: 8px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+        }
+
+        .entry button:hover {
+            transform: scale(1.05);
+        }
+
+        .entry-mood {
+            font-weight: bold;
+            color: var(--primary-color);
+            margin: 0.5em 0;
+            font-size: 1.1rem;
+        }
+
+        .entry-time {
+            font-size: 0.9em;
+            color: var(--text-color);
+            opacity: 0.7;
+            margin: 0.5em 0;
+        }
+
+        .entry-content {
+            margin: 1rem 0;
+            line-height: 1.6;
+        }
+
+        /* Highlight search matches */
+        .highlight {
+            background-color: #ffeb3b;
+            color: #000;
+            font-weight: bold;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+
+        .dark-mode .highlight {
+            background-color: #ffc107;
+            color: #000;
+        }
+
+        /* Chat styling */
+        #chat-box {
+            max-width: 700px;
+            margin: 2rem auto;
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            height: 350px;
+            overflow-y: auto;
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+        }
+
+        #user-input {
+            max-width: 600px;
+            margin: 1rem auto;
+            display: block;
+            padding: 12px 16px;
+            font-size: 1rem;
+            border-radius: 10px;
+            border: 2px solid var(--primary-color);
+            background-color: var(--input-bg);
+            color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+
+        #user-input:focus {
+            outline: none;
+            box-shadow: 0 4px 15px rgba(92, 184, 178, 0.2);
+            transform: translateY(-2px);
+        }
+
+        #send-btn {
+            display: block;
+            margin: 0.5rem auto;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .user-message {
+            background-color: var(--secondary-color);
+            padding: 12px 16px;
+            margin: 8px 0;
+            border-radius: 10px;
+            text-align: right;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .ai-message {
+            background-color: var(--input-bg);
+            padding: 12px 16px;
+            margin: 8px 0;
+            border-radius: 10px;
+            text-align: left;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .loading {
+            font-style: italic;
+            opacity: 0.7;
+        }
+
+        /* Edit mode styling */
+        .entry.editing textarea {
+            width: 100%;
+            height: 120px;
+            margin: 10px 0;
+            padding: 10px;
+            border: 2px solid var(--primary-color);
+            border-radius: 8px;
+            background: var(--input-bg);
+            color: var(--text-color);
+            font-family: inherit;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            body {
+                padding: 0.5rem;
+            }
+
+            .auth-container, .main-app {
+                margin: 0.5rem;
+                width: calc(100% - 1rem);
+                max-width: none;
+            }
+
+            .main-app {
+                min-height: calc(100vh - 1rem);
+            }
+
+            header h1 {
+                font-size: 2.2rem;
+            }
+
+            .journal-section,
+            .quote-section {
+                margin: 1rem auto;
+                padding: 1.5rem;
+            }
+
+            #modeToggle {
+                top: 10px;
+                right: 10px;
+                padding: 10px 16px;
+                font-size: 14px;
+            }
+
+            .sound-menu {
+                bottom: 20px;
+                right: 20px;
+            }
+
+            #sound-toggle {
+                padding: 16px;
+                font-size: 20px;
+            }
+        }
+        /* Add this to your existing CSS file */
+
+/* Typing indicator animation */
+.typing-indicator {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.typing-indicator span {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: #666;
+    margin-right: 2px;
+    animation: typing 1.4s infinite ease-in-out;
+}
+
+.typing-indicator span:nth-child(1) {
+    animation-delay: -0.32s;
+}
+
+.typing-indicator span:nth-child(2) {
+    animation-delay: -0.16s;
+}
+
+.typing-indicator span:nth-child(3) {
+    animation-delay: 0s;
+}
+
+@keyframes typing {
+    0%, 80%, 100% {
+        opacity: 0.3;
+        transform: scale(0.8);
+    }
+    40% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Enhanced chat messages */
+.ai-message {
+    background: #f0f8ff;
+    border-left: 4px solid #4CAF50;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 8px;
+    animation: slideIn 0.3s ease-out;
+}
+
+.user-message {
+    background: #e3f2fd;
+    border-left: 4px solid #2196F3;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 8px;
+    animation: slideIn 0.3s ease-out;
+}
+
+.ai-message.loading {
+    background: #f5f5f5;
+    color: #666;
+    font-style: italic;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Dark mode support for chat */
+.dark-mode .ai-message {
+    background: #2d4a3d;
+    color: #e8f5e8;
+}
+
+.dark-mode .user-message {
+    background: #1e3a5f;
+    color: #e3f2fd;
+}
+
+.dark-mode .ai-message.loading {
+    background: #333;
+    color: #ccc;
+}

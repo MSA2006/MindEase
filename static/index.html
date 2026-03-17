@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindEase - Your AI Mental Health Companion</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        
+    </style>
+</head>
+<body>
+    <!-- Authentication Container -->
+    <div id="auth-container" class="auth-container">
+        <div class="app-header">
+            <div class="app-logo">🧠</div>
+            <h1 class="app-title">MindEase</h1>
+            <p class="app-subtitle">Your AI mental health companion</p>
+        </div>
+
+        <div class="auth-tabs">
+            <button class="auth-tab active" data-tab="login">Login</button>
+            <button class="auth-tab" data-tab="register">Register</button>
+        </div>
+
+        <div id="alert-container"></div>
+
+        <!-- Login Form -->
+        <form id="login-form" class="auth-form active">
+            <div class="form-group">
+                <input type="text" id="login-username" class="form-input" placeholder="Username or Email" required>
+            </div>
+            <div class="form-group password-container">
+                <input type="password" id="login-password" class="form-input" placeholder="Password" required>
+                <button type="button" class="password-toggle" data-target="login-password">👁️</button>
+            </div>
+            <button type="submit" class="form-button">Sign In</button>
+        </form>
+
+        <!-- Register Form -->
+        <form id="register-form" class="auth-form">
+            <div class="form-group">
+                <input type="text" id="register-username" class="form-input" placeholder="Username" required>
+            </div>
+            <div class="form-group">
+                <input type="email" id="register-email" class="form-input" placeholder="Email" required>
+            </div>
+            <div class="form-group password-container">
+                <input type="password" id="register-password" class="form-input" placeholder="Password (min 6 characters)" required minlength="6">
+                <button type="button" class="password-toggle" data-target="register-password">👁️</button>
+            </div>
+            <div class="form-group password-container">
+                <input type="password" id="register-confirm-password" class="form-input" placeholder="Confirm Password" required minlength="6">
+                <button type="button" class="password-toggle" data-target="register-confirm-password">👁️</button>
+            </div>
+            <button type="submit" class="form-button">Create Account</button>
+        </form>
+    </div>
+
+    <!-- Main Application -->
+    <div id="main-app" class="main-app light-mode">
+        <nav class="app-nav">
+            <div>
+                <span class="app-title">🧠 MindEase</span>
+            </div>
+            <div class="nav-user">
+                <span id="user-welcome">Welcome!</span>
+                <button id="logout-btn" class="logout-btn">Logout</button>
+            </div>
+        </nav>
+
+        <div class="app-content">
+            <!-- Dark/Light Mode Toggle -->
+            <button id="modeToggle">🌙 Toggle Dark Mode</button>
+
+            <header>
+                <h1>Welcome to MindEase 🌱</h1>
+                <p>Your safe space to reflect, write, and feel better.</p>
+            </header>
+
+            <!-- Chat Section -->
+            <div id="chat-box"></div>
+            <input type="text" id="user-input" placeholder="Type your message..." />
+            <button id="send-btn">Send</button>
+
+            <!-- Journal Section -->
+            <section class="journal-section">
+                <h2>📝 Journal Entry</h2>
+                <textarea id="journal-textarea" placeholder="How are you feeling today? Write anything here..."></textarea>
+                <button id="saveEntryBtn">Save Entry</button>
+
+                <h2>Your Journal Entries</h2>
+                <button id="toggleBtn">View Journal Entries</button>
+                
+                <!-- Search functionality -->
+                <div id="entriesContainer">
+                    <input type="text" id="searchInput" placeholder="🔍 Search your journal entries...">
+                    <div class="search-info" id="searchInfo">
+                        Type to search through your entries by content, date, or mood
+                    </div>
+                    <button id="clearSearch">Clear Search</button>
+                    <div id="entryDisplay"></div>
+                </div>
+            </section>
+
+            <!-- Quote Section -->
+            <section class="quote-section">
+                <h2>🌤️ Today's Motivation</h2>
+                <p id="quote">"You've survived 100% of your worst days. You're doing great." 💚</p>
+            </section>
+
+            <!-- Sound Control Floating Button -->
+            <div class="sound-menu">
+                <div id="sound-buttons">
+                    <button class="sound-btn" data-sound="rain">Rain 🌧️</button>
+                    <button class="sound-btn" data-sound="waves">Waves 🌊</button>
+                    <button class="sound-btn" data-sound="birds">Birds 🐦</button>
+                    <button class="sound-btn" data-sound="wind">Wind & leaves 🌬️</button>
+                </div>
+                <button id="sound-toggle">🎵</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
